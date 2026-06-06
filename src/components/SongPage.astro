@@ -156,7 +156,7 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
                         data-annotation-body={annotation?.explanation ?? annotation?.body}
                         onmouseenter={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
                         onfocus={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
-                        onclick={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
+                        onclick={annotation ? "window.setLyricMeaningFromLine?.(this, true)" : undefined}
                       >
                         <span>{line.text}</span>
                       </button>
@@ -241,25 +241,52 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
 </dialog>
 
 {firstAnnotation && (
-  <dialog class="m-auto mt-auto mb-0 w-[min(42rem,calc(100vw-2rem))] rounded-t-[24px] rounded-b-none border border-white/18 bg-[#121212] p-0 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_24px_70px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,0,0,0.4)] backdrop:bg-black/72 backdrop:backdrop-blur-md max-lg:max-h-[85vh] lg:hidden" data-meaning-dialog>
-    <div class="flex items-center justify-between gap-4 border-b border-white/12 px-6 py-5">
+  <dialog class="meaning-sheet m-auto mt-auto mb-0 w-[min(40rem,calc(100vw-0.75rem))] rounded-t-[30px] rounded-b-none border border-white/16 bg-[#1b1918]/95 p-0 text-ink shadow-[0_-18px_70px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop:backdrop-blur-[2px] max-lg:max-h-[85vh] lg:hidden" data-meaning-dialog>
+    <div class="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4">
       <div class="flex items-center gap-3">
-        <span class="grid size-9 place-items-center rounded-[10px] bg-white/10 text-peach-strong">
+        <span class="grid size-9 place-items-center rounded-[12px] bg-white/10 text-peach-strong shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_20px_rgba(0,0,0,0.2)]">
           <Sparkles size={18} />
         </span>
-        <h2 class="text-lg font-bold">{t("song.lyricMeaning")}</h2>
+        <h2 class="text-lg font-bold text-ink">{t("song.lyricMeaning")}</h2>
       </div>
-      <button type="button" class="grid size-9 place-items-center rounded-full text-ink/60 transition hover:bg-white/8 hover:text-ink" aria-label={t("song.closeStory")} onclick="document.querySelector('[data-meaning-dialog]')?.close()">
+      <button type="button" class="grid size-8 place-items-center rounded-full bg-white/8 text-ink/50 transition hover:bg-white/14 hover:text-ink" aria-label={t("song.closeStory")} onclick="document.querySelector('[data-meaning-dialog]')?.close()">
         <X size={19} />
       </button>
     </div>
-    <div class="max-h-[60vh] overflow-auto px-6 py-6 space-y-3">
-      <p class="whitespace-pre-line text-sm font-medium leading-6 text-peach-strong" data-meaning-dialog-lyric></p>
-      <p class="whitespace-pre-line text-sm leading-6 text-ink/55" data-meaning-dialog-literal></p>
+    <div class="max-h-[60vh] space-y-3 overflow-auto px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-5">
+      <p class="whitespace-pre-line text-[0.98rem] font-semibold leading-6 text-peach-strong" data-meaning-dialog-lyric></p>
+      <p class="whitespace-pre-line text-sm leading-6 text-ink/50" data-meaning-dialog-literal></p>
       <p class="whitespace-pre-line text-sm font-normal leading-6 text-ink/72" data-meaning-dialog-body></p>
     </div>
   </dialog>
 )}
+
+<style>
+  .meaning-sheet::backdrop {
+    background: rgba(0, 0, 0, 0.24);
+  }
+
+  .meaning-sheet[open] {
+    animation: meaning-sheet-rise 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes meaning-sheet-rise {
+    from {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .meaning-sheet[open] {
+      animation: none;
+    }
+  }
+</style>
 
 <script is:inline>
   const meaningLyric = document.querySelector("[data-meaning-lyric]");
@@ -274,32 +301,34 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
   `;
   document.head.appendChild(style);
 
-  window.setLyricMeaningFromLine = (line) => {
+  window.setLyricMeaningFromLine = (line, openSheet = false) => {
     const lyric = line.getAttribute("data-annotation-lyric");
     const literal = line.getAttribute("data-annotation-literal");
     const body = line.getAttribute("data-annotation-body");
     const id = line.getAttribute("data-annotation-id");
     if (!lyric || !body || !meaningLyric || !meaningBody) return;
 
-    if (meaningLyric.textContent === lyric && meaningBody.textContent === body) return;
+    const isSameMeaning = meaningLyric.textContent === lyric && meaningBody.textContent === body;
 
-    const fadeOut = meaningContainer.animate(
-      [{ opacity: 1 }, { opacity: 0 }],
-      { duration: 100, easing: "ease-out" }
-    );
-    fadeOut.onfinish = () => {
-      meaningLyric.textContent = lyric;
-      if (meaningLiteral) {
-        meaningLiteral.textContent = literal;
-        meaningLiteral.style.display = literal ? "" : "none";
-      }
-      meaningBody.textContent = body;
-
-      meaningContainer.animate(
-        [{ opacity: 0 }, { opacity: 1 }],
-        { duration: 150, easing: "ease-out" }
+    if (!isSameMeaning && meaningContainer) {
+      const fadeOut = meaningContainer.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        { duration: 100, easing: "ease-out" }
       );
-    };
+      fadeOut.onfinish = () => {
+        meaningLyric.textContent = lyric;
+        if (meaningLiteral) {
+          meaningLiteral.textContent = literal;
+          meaningLiteral.style.display = literal ? "" : "none";
+        }
+        meaningBody.textContent = body;
+
+        meaningContainer.animate(
+          [{ opacity: 0 }, { opacity: 1 }],
+          { duration: 150, easing: "ease-out" }
+        );
+      };
+    }
 
     document.querySelectorAll("[data-line][data-annotation-active]").forEach((el) => {
       el.removeAttribute("data-annotation-active");
@@ -311,7 +340,7 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
     }
 
     const meaningDialog = document.querySelector("[data-meaning-dialog]");
-    if (meaningDialog && window.innerWidth < 1024 && meaningDialog instanceof HTMLDialogElement) {
+    if (openSheet && meaningDialog && window.innerWidth < 1024 && meaningDialog instanceof HTMLDialogElement) {
       const dLyric = meaningDialog.querySelector("[data-meaning-dialog-lyric]");
       const dLiteral = meaningDialog.querySelector("[data-meaning-dialog-literal]");
       const dBody = meaningDialog.querySelector("[data-meaning-dialog-body]");
