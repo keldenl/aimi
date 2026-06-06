@@ -31,6 +31,8 @@ const en = {
   "song.queue": "Queue",
   "song.storyLabel": "Story Behind the Song",
   "song.lyricsLabel": "{title} lyrics",
+  "song.closePlayer": "Close player",
+  "song.playerPlaying": "Now playing on Suno",
 
   "langSwitch.en": "EN",
   "langSwitch.zh-TW": "中文",

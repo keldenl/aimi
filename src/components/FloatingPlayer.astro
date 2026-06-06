@@ -1,0 +1,125 @@
+---
+import { X } from "@lucide/astro";
+import { useT } from "../lib/i18n";
+
+interface Song {
+  slug: string;
+  title: string;
+  artist: string;
+  album: string;
+  coverImage: string;
+  sunoId?: string;
+}
+
+const { song } = Astro.props as { song: Song };
+const locale = Astro.currentLocale ?? "en";
+const t = useT(locale);
+
+const hasSuno = Boolean(song.sunoId);
+const embedUrl = hasSuno ? `https://suno.com/embed/${song.sunoId}` : "";
+---
+
+{hasSuno && (
+  <aside
+    class="floating-player group pointer-events-none fixed inset-x-3 bottom-3 z-40 flex justify-end sm:inset-x-0 sm:bottom-5 sm:right-5 sm:left-auto"
+    data-floating-player
+    data-open="false"
+    aria-hidden="true"
+    aria-label={t("song.playerPlaying")}
+  >
+    <div class="pointer-events-auto w-[min(22.5rem,calc(100vw-1.5rem))] origin-bottom-right translate-y-5 scale-[0.97] opacity-0 transition-[transform,opacity,filter] duration-[480ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[open=true]:translate-y-0 group-data-[open=true]:scale-100 group-data-[open=true]:opacity-100">
+      <div class="relative overflow-hidden rounded-[20px] border border-white/10 bg-[#1a1715]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_30px_90px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,0,0,0.35)] backdrop-blur-2xl">
+        <div class="pointer-events-none absolute -left-px -top-px h-px w-24 bg-gradient-to-r from-white/35 via-white/10 to-transparent" aria-hidden="true"></div>
+
+        <iframe
+          data-iframe
+          data-iframe-src={embedUrl}
+          src="about:blank"
+          title={`${song.title} on Suno`}
+          class="block h-[120px] w-full"
+          style="color-scheme: dark;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+
+        <button
+          type="button"
+          data-close-player
+          class="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-black/45 text-ink/85 shadow-[0_2px_8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md transition hover:bg-black/65 hover:text-ink"
+          aria-label={t("song.closePlayer")}
+        >
+          <X size={14} stroke-width={2.4} />
+        </button>
+      </div>
+    </div>
+  </aside>
+)}
+
+<script is:inline>
+  (function () {
+    function init() {
+      var player = document.querySelector("[data-floating-player]");
+      if (!player) return;
+
+      var openButtons = document.querySelectorAll("[data-open-player]");
+      var closeButtons = player.querySelectorAll("[data-close-player]");
+      var iframe = player.querySelector("[data-iframe]");
+
+      var isOpen = false;
+
+      function loadIframe() {
+        if (!iframe) return;
+        var target = iframe.getAttribute("data-iframe-src");
+        if (target) {
+          try { iframe.src = target; } catch (e) {}
+        }
+      }
+
+      function unloadIframe() {
+        if (!iframe) return;
+        try { iframe.src = "about:blank"; } catch (e) {}
+      }
+
+      function setOpen(next) {
+        if (next === isOpen) return;
+        isOpen = next;
+        player.setAttribute("data-open", isOpen ? "true" : "false");
+        player.setAttribute("aria-hidden", isOpen ? "false" : "true");
+        if (isOpen) {
+          loadIframe();
+        } else {
+          unloadIframe();
+        }
+      }
+
+      for (var i = 0; i < openButtons.length; i++) {
+        openButtons[i].addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(true);
+        });
+      }
+
+      for (var j = 0; j < closeButtons.length; j++) {
+        closeButtons[j].addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen(false);
+        });
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isOpen) {
+          setOpen(false);
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>

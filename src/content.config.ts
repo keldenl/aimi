@@ -21,6 +21,7 @@ const songs = defineCollection({
     duration: z.string(),
     genre: z.string(),
     coverImage: z.string(),
+    sunoId: z.string().optional(),
     audioUrl: z.string().optional(),
     story: z.object({
       title: z.string(),

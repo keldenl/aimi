@@ -31,6 +31,8 @@ const zhTW: Record<string, string> = {
   "song.queue": "播放列表",
   "song.storyLabel": "歌曲故事",
   "song.lyricsLabel": "{title} 歌詞",
+  "song.closePlayer": "關閉播放器",
+  "song.playerPlaying": "正在 Suno 上播放",
 
   "langSwitch.en": "EN",
   "langSwitch.zh-TW": "中文",
