@@ -21,13 +21,13 @@
         },
         {
           "id": "v1-2",
-          "text": "Neon spills across my pillowcase"
+          "text": "Neon spills across my pillowcase",
+          "annotationId": "neon-pillowcase"
         },
         {
           "id": "v1-3",
           "text": "You left a note, the kind that stays",
-          "annotationId": "note-that-stays",
-          "highlighted": true
+          "annotationId": "note-that-stays"
         },
         {
           "id": "v1-4",
@@ -40,11 +40,13 @@
       "lines": [
         {
           "id": "pc-1",
-          "text": "Maybe time will sand the edges down"
+          "text": "Maybe time will sand the edges down",
+          "annotationId": "sand-the-edges"
         },
         {
           "id": "pc-2",
-          "text": "But some shapes never leave the ground"
+          "text": "But some shapes never leave the ground",
+          "annotationId": "some-shapes"
         }
       ]
     },
@@ -53,11 +55,13 @@
       "lines": [
         {
           "id": "c-1",
-          "text": "You’re my nightlight, you don’t fade"
+          "text": "You’re my nightlight, you don’t fade",
+          "annotationId": "nightlight-refrain"
         },
         {
           "id": "c-2",
-          "text": "When the room goes quiet and the thoughts get loud"
+          "text": "When the room goes quiet and the thoughts get loud",
+          "annotationId": "quiet-loud"
         },
         {
           "id": "c-3",
@@ -74,11 +78,13 @@
       "lines": [
         {
           "id": "v2-1",
-          "text": "I water ghosts, they grow on cue"
+          "text": "I water ghosts, they grow on cue",
+          "annotationId": "water-ghosts"
         },
         {
           "id": "v2-2",
-          "text": "Petals made of all the things we didn’t do"
+          "text": "Petals made of all the things we didn’t do",
+          "annotationId": "petals"
         },
         {
           "id": "v2-3",
@@ -92,9 +98,37 @@
     }
   ],
   "annotations": {
+    "neon-pillowcase": {
+      "lyric": "Neon spills across my pillowcase",
+      "body": "The outside world is leaking into the most private space in the song. It sets up the sleepless feeling before the loss is named directly."
+    },
     "note-that-stays": {
       "lyric": "You left a note, the kind that stays",
       "body": "This line reflects on the lasting impact of someone’s parting words. Even though the person is gone, the note and what it represents linger. It is a reminder of comfort, love, and unfinished conversations."
+    },
+    "sand-the-edges": {
+      "lyric": "Maybe time will sand the edges down",
+      "body": "The narrator wants time to soften the pain, but the image is careful rather than dramatic. Healing here is slow abrasion, not a clean break."
+    },
+    "some-shapes": {
+      "lyric": "Maybe time will sand the edges down\nBut some shapes never leave the ground",
+      "body": "These two lines work together: time can make something easier to hold, but it does not always make it disappear. The memory remains part of the room."
+    },
+    "nightlight-refrain": {
+      "lyric": "You’re my nightlight, you don’t fade",
+      "body": "The title image turns grief into something small and useful. It is not a blazing rescue, just enough light to keep moving."
+    },
+    "quiet-loud": {
+      "lyric": "When the room goes quiet and the thoughts get loud",
+      "body": "This line names the way silence can amplify memory. The contrast makes the chorus feel intimate instead of cinematic."
+    },
+    "water-ghosts": {
+      "lyric": "I water ghosts, they grow on cue",
+      "body": "The narrator is participating in the haunting by revisiting it. The line suggests that attention can accidentally keep an old feeling alive."
+    },
+    "petals": {
+      "lyric": "I water ghosts, they grow on cue\nPetals made of all the things we didn’t do",
+      "body": "The image stretches across both lines: regret becomes something delicate and blooming, not just heavy. It makes the unfinished future feel strangely alive."
     }
   },
   "themes": ["Memory", "Letting Go", "Healing", "Nostalgia"],
