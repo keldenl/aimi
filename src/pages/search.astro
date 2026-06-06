@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL :
     <p class="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-peach">Search</p>
     <h1 class="text-4xl font-bold tracking-normal sm:text-5xl">Find a song, lyric, or story.</h1>
     <div class="mt-8 rounded-lg border border-white/10 bg-white/[0.045] p-4 sm:p-6">
-      <pagefind-config base-url={base}></pagefind-config>
+      <pagefind-config base-url={base} bundle-path={`${base}pagefind/`}></pagefind-config>
       <pagefind-searchbox placeholder="Search aimi music..." show-sub-results></pagefind-searchbox>
       <p id="search-fallback" class="text-sm leading-6 text-muted">Search is generated after the production build.</p>
     </div>
