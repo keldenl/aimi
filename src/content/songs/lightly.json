@@ -1,0 +1,236 @@
+{
+  "slug": "lightly",
+  "title": "Lightly",
+  "artist": "aimi",
+  "album": "Non-album Single",
+  "releaseDate": "May 28, 2026",
+  "duration": "4:12",
+  "genre": "Soft Korean Indie R&B",
+  "coverImage": "/covers/lightly.png",
+  "story": {
+    "title": "Story Behind the Song",
+    "body": "This song was written for the uneasy moment when the future stops feeling theoretical. The world is changing quickly. Work is changing with it. Jobs that once felt permanent are starting to look temporary. Routines people built their lives around are being questioned by tools that can do in seconds what used to take hours. That can feel frightening, especially when work has become so tied to identity.\n\nThe song does not treat that fear as silly. Work is never just work. It pays rent. It gives people a schedule, a name tag, a place to go, a reason to feel needed. Even the dullest job can hold real memories.\n\nBut the song also pushes against the idea that every old structure deserves to be saved just because it is familiar. Some work gives people dignity. Some work slowly drains it. The song is interested in that tension: the sadness of losing something familiar, and the possibility that what disappears may also make room for something better.\n\nAt its center, the song is about staying close. The future is easier to fear when facing it alone. The message is simple: people are not the tasks they perform. We will be okay if we do not let go of each other."
+  },
+  "lyrics": [
+    {
+      "label": "Verse",
+      "lines": [
+        { "id": "v1-1", "text": "I got something like a funny feeling", "annotationId": "old-lights" },
+        { "id": "v1-2", "text": "Watching old lights learn to fade", "annotationId": "old-lights" },
+        { "id": "v1-3", "text": "All the little rooms we lived in", "annotationId": "little-rooms" },
+        { "id": "v1-4", "text": "All the parts we had to play", "annotationId": "little-rooms", "gap": true },
+        { "id": "v1-5", "text": "You were folding paper mornings", "annotationId": "paper-mornings" },
+        { "id": "v1-6", "text": "Into rows of tiny squares", "annotationId": "paper-mornings" },
+        { "id": "v1-7", "text": "Making sense of someone's weather", "annotationId": "someones-weather" },
+        { "id": "v1-8", "text": "Like it mattered you were there", "annotationId": "someones-weather", "gap": true },
+        { "id": "v1-9", "text": "And I know it sounds unkind, babe", "annotationId": "sounds-unkind" },
+        { "id": "v1-10", "text": "To say some things can disappear", "annotationId": "sounds-unkind" },
+        { "id": "v1-11", "text": "When they bought you dinner sometimes", "annotationId": "bought-dinner" },
+        { "id": "v1-12", "text": "When they paid to keep you near", "annotationId": "bought-dinner", "gap": true },
+        { "id": "v1-13", "text": "But I don't miss the bell above you", "annotationId": "bell-above" },
+        { "id": "v1-14", "text": "I don't miss the drawer's bright teeth", "annotationId": "bell-above" },
+        { "id": "v1-15", "text": "I just miss the way you'd laugh once", "annotationId": "laugh-once" },
+        { "id": "v1-16", "text": "When the night came up for air", "annotationId": "laugh-once" }
+      ]
+    },
+    {
+      "label": "Pre-chorus",
+      "lines": [
+        { "id": "pc-1", "text": "Wish you could see what I see, babe", "annotationId": "see-what-i-see" },
+        { "id": "pc-2", "text": "Not the ending, not the fall", "annotationId": "see-what-i-see" },
+        { "id": "pc-3", "text": "Just a window getting larger", "annotationId": "window-larger" },
+        { "id": "pc-4", "text": "In a room that felt too small", "annotationId": "window-larger" }
+      ]
+    },
+    {
+      "label": "Chorus",
+      "lines": [
+        { "id": "c-1", "text": "Don't take it hard, take it lightly", "annotationId": "take-it-lightly" },
+        { "id": "c-2", "text": "Like the moon takes off the day", "annotationId": "moon-takes" },
+        { "id": "c-3", "text": "If the old song leaves your body", "annotationId": "old-song" },
+        { "id": "c-4", "text": "There'll be another one to play", "annotationId": "old-song", "gap": true },
+        { "id": "c-5", "text": "Take it away, take it away", "annotationId": "hours-gray" },
+        { "id": "c-6", "text": "All the hours painted gray", "annotationId": "hours-gray" },
+        { "id": "c-7", "text": "But don't take your hands from mine, love", "annotationId": "dont-take-hands" },
+        { "id": "c-8", "text": "Don't take your eyes away", "annotationId": "dont-take-hands", "gap": true },
+        { "id": "c-9", "text": "Something new is always frightening", "annotationId": "something-new" },
+        { "id": "c-10", "text": "Till it's warm enough to name", "annotationId": "something-new" },
+        { "id": "c-11", "text": "Don't take it hard, take it lightly" },
+        { "id": "c-12", "text": "We are not the things that change", "annotationId": "not-the-things" }
+      ]
+    },
+    {
+      "label": "Verse",
+      "lines": [
+        { "id": "v2-1", "text": "There were no cathedrals in our pockets", "annotationId": "cathedrals" },
+        { "id": "v2-2", "text": "No little green ghost full of songs", "annotationId": "cathedrals" },
+        { "id": "v2-3", "text": "No five hundred doors opening", "annotationId": "five-hundred-doors" },
+        { "id": "v2-4", "text": "Where nobody thought they belonged", "annotationId": "five-hundred-doors", "gap": true },
+        { "id": "v2-5", "text": "Then the future came in softly", "annotationId": "future-came" },
+        { "id": "v2-6", "text": "Like a rumor through the glass", "annotationId": "future-came" },
+        { "id": "v2-7", "text": "Not a trumpet, not a warning", "annotationId": "spark" },
+        { "id": "v2-8", "text": "Just a spark that learned to last", "annotationId": "spark", "gap": true },
+        { "id": "v2-9", "text": "So maybe this is not a stealing", "annotationId": "not-a-stealing" },
+        { "id": "v2-10", "text": "Maybe this is not goodbye", "annotationId": "not-a-stealing" },
+        { "id": "v2-11", "text": "Maybe we were never meant to", "annotationId": "never-meant" },
+        { "id": "v2-12", "text": "Spend our lives learning to file", "annotationId": "never-meant", "gap": true },
+        { "id": "v2-13", "text": "Every dream into a folder", "annotationId": "dream-into-folder" },
+        { "id": "v2-14", "text": "Every hunger into rent", "annotationId": "dream-into-folder" },
+        { "id": "v2-15", "text": "Every bright and useless longing", "annotationId": "bright-useless" },
+        { "id": "v2-16", "text": "Into something that made sense", "annotationId": "bright-useless" }
+      ]
+    },
+    {
+      "label": "Pre-chorus",
+      "lines": [
+        { "id": "pc2-1", "text": "Wish you could see what I see, babe", "annotationId": "see-before" },
+        { "id": "pc2-2", "text": "Before you call it all too late", "annotationId": "see-before" },
+        { "id": "pc2-3", "text": "Some flowers only open", "annotationId": "flowers-open" },
+        { "id": "pc2-4", "text": "When the vase begins to break", "annotationId": "flowers-open" }
+      ]
+    },
+    {
+      "label": "Chorus",
+      "lines": [
+        { "id": "c2-1", "text": "Don't take it hard, take it lightly" },
+        { "id": "c2-2", "text": "Like the moon takes off the day" },
+        { "id": "c2-3", "text": "If the old song leaves your body" },
+        { "id": "c2-4", "text": "There'll be another one to play", "gap": true },
+        { "id": "c2-5", "text": "Take it away, take it away" },
+        { "id": "c2-6", "text": "All the hours painted gray" },
+        { "id": "c2-7", "text": "But don't take your hands from mine, love" },
+        { "id": "c2-8", "text": "Don't take your eyes away", "gap": true },
+        { "id": "c2-9", "text": "Something new is always frightening", "annotationId": "something-new-close" },
+        { "id": "c2-10", "text": "Till it's close enough to stay", "annotationId": "something-new-close" },
+        { "id": "c2-11", "text": "(Don't take it hard, take it lightly)" },
+        { "id": "c2-12", "text": "(Don't take it hard, take it lightly)" },
+        { "id": "c2-13", "text": "We are more than what they pay", "annotationId": "more-than-pay" }
+      ]
+    }
+  ],
+  "annotations": {
+    "old-lights": {
+      "lyric": "I got something like a funny feeling\nWatching old lights learn to fade",
+      "body": "The song begins with a feeling before it gives an argument. \"Old lights\" are old ways of living and working. They are not being violently destroyed. They are fading, slowly enough for people to notice and grieve."
+    },
+    "little-rooms": {
+      "lyric": "All the little rooms we lived in\nAll the parts we had to play",
+      "body": "The \"little rooms\" are the roles people get placed into: job titles, shifts, departments, routines, social expectations. The line is about how easily a person can confuse a role with a self."
+    },
+    "paper-mornings": {
+      "lyric": "You were folding paper mornings\nInto rows of tiny squares",
+      "body": "This is the image of human time being turned into admin. Mornings become schedules, forms, spreadsheets, boxes. Something alive gets folded into something manageable."
+    },
+    "someones-weather": {
+      "lyric": "Making sense of someone's weather\nLike it mattered you were there",
+      "body": "The work here is emotional and clerical at the same time: taking someone else's chaos and making it readable. The line honors the care inside that labor, even if the task itself belongs to a world that may be changing."
+    },
+    "sounds-unkind": {
+      "lyric": "And I know it sounds unkind, babe\nTo say some things can disappear",
+      "body": "This line is there because optimism can become cruel if it skips the cost. Saying a job might disappear is not abstract to the person who built a life around it. The song makes space for that hurt before asking for hope."
+    },
+    "bought-dinner": {
+      "lyric": "When they bought you dinner sometimes\nWhen they paid to keep you near",
+      "body": "Work can feel caring in small ways. A paycheck, a meal, a team, a place to return to. But it also keeps people near the machine. The line holds both truths at once."
+    },
+    "bell-above": {
+      "lyric": "But I don't miss the bell above you\nI don't miss the drawer's bright teeth",
+      "body": "The bell and drawer point to service work, cash registers, counters, closing shifts. The \"bright teeth\" make the drawer feel almost alive, like a little machine that keeps eating time."
+    },
+    "laugh-once": {
+      "lyric": "I just miss the way you'd laugh once\nWhen the night came up for air",
+      "body": "The job itself is not the sacred thing. The person is. This line keeps the memory that matters: a laugh at the edge of exhaustion, a human sound inside a mechanical day."
+    },
+    "see-what-i-see": {
+      "lyric": "Wish you could see what I see, babe\nNot the ending, not the fall",
+      "body": "This is the speaker trying to offer another frame. The same change can look like collapse from one angle and opening from another."
+    },
+    "window-larger": {
+      "lyric": "Just a window getting larger\nIn a room that felt too small",
+      "body": "The old room was safe, but it was also cramped. This line turns disruption into space. The future is not only taking something away; it is letting in more air."
+    },
+    "take-it-lightly": {
+      "lyric": "Don't take it hard, take it lightly",
+      "body": "The hook is meant as tenderness, not dismissal. It does not mean \"don't feel anything.\" It means do not carry the future like a punishment before it has even arrived."
+    },
+    "moon-takes": {
+      "lyric": "Like the moon takes off the day",
+      "body": "The day ending is not a catastrophe. It is part of the rhythm. This line makes change feel natural: one light leaves, another takes its place."
+    },
+    "old-song": {
+      "lyric": "If the old song leaves your body\nThere'll be another one to play",
+      "body": "The \"old song\" is the rhythm someone used to live by: their job, routine, usefulness, identity. When that rhythm leaves, it feels like silence. The song believes silence can become room for a new melody."
+    },
+    "hours-gray": {
+      "lyric": "Take it away, take it away\nAll the hours painted gray",
+      "body": "This is where the fear of being \"taken from\" flips into relief. What should be taken away are the gray hours: repetitive work, dead time, the tasks that made people feel less alive."
+    },
+    "dont-take-hands": {
+      "lyric": "But don't take your hands from mine, love\nDon't take your eyes away",
+      "body": "This is the real plea of the song. The future can take old systems, old jobs, old routines. It should not take closeness. People need each other more, not less, when the ground moves."
+    },
+    "something-new": {
+      "lyric": "Something new is always frightening\nTill it's warm enough to name",
+      "body": "A new thing is frightening while it is still nameless. Once it becomes part of daily life, people give it language. They learn where it belongs. Strange becomes familiar."
+    },
+    "not-the-things": {
+      "lyric": "We are not the things that change",
+      "body": "This line states the song's core belief plainly. Tools change. Markets change. Work changes. A person is not reduced to the temporary shape of any of those things."
+    },
+    "cathedrals": {
+      "lyric": "There were no cathedrals in our pockets\nNo little green ghost full of songs",
+      "body": "This line points to smartphones and the almost impossible amount of life they now hold: music, maps, money, memory, work, family, news, prayer, loneliness, everything. What now feels ordinary once would have felt unreal.\n\nThe \"little green ghost\" is a nod to streaming music: a small icon carrying a world of songs. It stands for the strange way new tools become normal, and how whole economies grow around things that once did not exist."
+    },
+    "five-hundred-doors": {
+      "lyric": "No five hundred doors opening\nWhere nobody thought they belonged",
+      "body": "New technology closes some doors, but it also creates doors no one had names for yet. This line is about people finding paths the old world never offered them."
+    },
+    "future-came": {
+      "lyric": "Then the future came in softly\nLike a rumor through the glass",
+      "body": "The future rarely arrives with a clean announcement. It slips in through screens, demos, links, apps, conversations. First it sounds like rumor. Then it becomes the room."
+    },
+    "spark": {
+      "lyric": "Not a trumpet, not a warning\nJust a spark that learned to last",
+      "body": "Major change often begins as something small. No ceremony. No obvious turning point. Just a spark that stays around long enough to change what people expect from the world."
+    },
+    "not-a-stealing": {
+      "lyric": "So maybe this is not a stealing\nMaybe this is not goodbye",
+      "body": "This line answers the central fear directly. Change can feel like theft when it touches work. The song offers another possibility: maybe the old shape is leaving, but the human future is not."
+    },
+    "never-meant": {
+      "lyric": "Maybe we were never meant to\nSpend our lives learning to file",
+      "body": "This is one of the sharpest lines in the song. It questions the kind of life where people spend their best energy sorting, labeling, filing, maintaining systems, and calling that the whole of work."
+    },
+    "dream-into-folder": {
+      "lyric": "Every dream into a folder\nEvery hunger into rent",
+      "body": "This line is about how adult life can shrink desire into obligation. Dreams become organized. Hunger becomes bills. Wanting more becomes needing to survive."
+    },
+    "bright-useless": {
+      "lyric": "Every bright and useless longing\nInto something that made sense",
+      "body": "\"Useless\" is used lovingly here. It means the parts of life that do not need to justify themselves: art, play, love, curiosity, small joys, strange ideas. The old world keeps asking bright things to become practical."
+    },
+    "see-before": {
+      "lyric": "Wish you could see what I see, babe\nBefore you call it all too late",
+      "body": "The second pre-chorus adds urgency. The speaker is not just offering a different view — they are afraid the other person will give up before the new shape appears."
+    },
+    "flowers-open": {
+      "lyric": "Some flowers only open\nWhen the vase begins to break",
+      "body": "The vase is the old container: the job, the system, the economy, the accepted way of living. Its breaking looks like ruin, but some forms of life cannot bloom while held inside the old shape."
+    },
+    "something-new-close": {
+      "lyric": "Something new is always frightening\nTill it's close enough to stay",
+      "body": "The second chorus replaces \"warm enough to name\" with \"close enough to stay.\" The fear of the new does not disappear through explanation alone — it fades when the strange thing stays long enough to feel like part of the room."
+    },
+    "more-than-pay": {
+      "lyric": "We are more than what they pay",
+      "body": "This is the final landing point. Money matters. Work matters. Survival matters. But a paycheck is not a full measure of a human being. The song ends by protecting that truth."
+    }
+  },
+  "themes": ["Change", "Work", "Identity", "Hope", "Human Connection"],
+  "moods": ["Bittersweet", "Tender", "Nostalgic", "Hopeful", "Intimate"],
+  "credits": [
+    "Lyrics and song by aimi",
+    "Produced by aimi",
+    "Released May 28, 2026"
+  ]
+}

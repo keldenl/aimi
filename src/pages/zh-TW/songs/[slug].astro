@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SongPage from "../../../components/SongPage.astro";
+import { useT } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  const songs = await getCollection("songs");
+  const translations = await getCollection("translations");
+  return songs.map((song) => {
+    const translation = translations.find((t) => t.id === song.data.slug);
+    return {
+      params: { slug: song.data.slug },
+      props: { song: song.data, translation: translation?.data ?? null },
+    };
+  });
+}
+
+const { song, translation } = Astro.props;
+const locale = Astro.currentLocale ?? "en";
+const t = useT(locale);
+---
+
+  <BaseLayout title={`${song.title} | ${t("nav.siteTitle")}`} description={`${song.title} — 歌詞、主題與製作名單`}>
+  <SongPage song={song} translation={translation} />
+</BaseLayout>

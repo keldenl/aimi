@@ -1,28 +1,30 @@
+@import "@fontsource-variable/noto-sans-tc";
 @import "tailwindcss";
 
 @theme {
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: ui-rounded, "SF Pro Rounded", "Avenir Next Rounded", "Arial Rounded MT Bold", "Helvetica Rounded", "Helvetica Neue", "Noto Sans TC", Arial, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
-  --color-ink: #f7f3f2;
-  --color-muted: #a7a1a4;
-  --color-line: #2d3036;
-  --color-panel: #171a20;
-  --color-peach: #f4a99f;
-  --color-peach-strong: #ffb3a9;
+  --color-ink: #fbf8f5;
+  --color-muted: #aaa5a1;
+  --color-line: #303030;
+  --color-panel: #141414;
+  --color-peach: #ff5138;
+  --color-peach-strong: #ff765f;
 }
 
 html {
   color-scheme: dark;
   font-feature-settings: "kern" 1, "liga" 1;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   min-width: 320px;
   background:
-    radial-gradient(circle at 24% 12%, rgba(244, 169, 159, 0.12), transparent 28rem),
-    radial-gradient(circle at 80% 30%, rgba(88, 116, 132, 0.14), transparent 34rem),
-    #0d1015;
+    radial-gradient(circle at 20% 0%, rgba(255, 81, 56, 0.11), transparent 30rem),
+    linear-gradient(180deg, #151515 0%, #101010 28rem, #0f0f0f 100%);
   color: var(--color-ink);
   font-family: var(--font-sans);
 }
@@ -39,5 +41,21 @@ input {
 }
 
 ::selection {
-  background: rgba(244, 169, 159, 0.34);
+  background: rgba(255, 81, 56, 0.36);
+}
+
+html[lang="zh-Hant"] .text-\[0\.68rem\] {
+  font-size: 0.75rem;
+}
+html[lang="zh-Hant"] .text-xs {
+  font-size: 0.8125rem;
+}
+html[lang="zh-Hant"] .text-sm {
+  font-size: 0.9375rem;
+}
+html[lang="zh-Hant"] .text-base {
+  font-size: 1.0625rem;
+}
+html[lang="zh-Hant"] .text-lg {
+  font-size: 1.1875rem;
 }

@@ -1,7 +1,7 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import SearchContent from "../components/SearchContent.astro";
-import { useT } from "../lib/i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SearchContent from "../../components/SearchContent.astro";
+import { useT } from "../../lib/i18n";
 
 const locale = Astro.currentLocale ?? "en";
 const t = useT(locale);

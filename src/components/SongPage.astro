@@ -1,12 +1,22 @@
 ---
-import { BookOpen, CirclePlus, Ellipsis, Play, Share2, Tag, Users, Smile, X } from "@lucide/astro";
-import TagList from "./TagList.astro";
+import { ArrowRight, BookOpen, Ellipsis, ListMusic, MicVocal, Play, Share2, Sparkles, X } from "@lucide/astro";
+import { useT, formatDate, localizedPath } from "../lib/i18n";
+import type { SongTranslation } from "../lib/i18n";
 
 interface LyricLine {
   id: string;
   text: string;
   annotationId?: string;
   highlighted?: boolean;
+  gap?: boolean;
+}
+
+function parseChineseBody(body: string): { literal?: string; explanation: string } {
+  const match = body.match(/^大意：\n([\s\S]*?)\n\n註解：\n([\s\S]*)$/);
+  if (match) {
+    return { literal: match[1].trim(), explanation: match[2].trim() };
+  }
+  return { explanation: body };
 }
 
 interface Song {
@@ -30,163 +40,246 @@ interface Song {
   themes: string[];
   moods: string[];
   credits: string[];
-  relatedSongs: Array<{ title: string; slug: string; album: string }>;
+
 }
 
-const { song } = Astro.props as { song: Song };
+const { song, translation } = Astro.props as { song: Song; translation?: SongTranslation };
+const locale = Astro.currentLocale ?? "en";
+const t = useT(locale);
 const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 const coverSrc = `${base}${song.coverImage.replace(/^\//, "")}`;
-const firstAnnotation = Object.values(song.annotations)[0];
+
+// Merge translation data
+const album = translation?.album ?? song.album;
+const genre = translation?.genre ?? song.genre;
+const storyTitle = translation?.story?.title ?? song.story.title;
+const storyBody = translation?.story?.body ?? song.story.body;
+const themes = translation?.themes ?? song.themes;
+const moods = translation?.moods ?? song.moods;
+const credits = translation?.credits ?? song.credits;
+const formattedDate = formatDate(song.releaseDate, locale);
+
+// Merge annotation bodies
+const mergedAnnotations: Record<string, { lyric: string; body: string; literal?: string; explanation?: string }> = {};
+for (const [id, baseAnn] of Object.entries(song.annotations)) {
+  const translatedBody = translation?.annotations?.[id]?.body;
+  const parsed = translatedBody ? parseChineseBody(translatedBody) : undefined;
+  mergedAnnotations[id] = {
+    lyric: baseAnn.lyric,
+    body: translatedBody ?? baseAnn.body,
+    literal: parsed?.literal,
+    explanation: parsed?.explanation,
+  };
+}
+
+const firstAnnotation = Object.values(mergedAnnotations)[0];
 ---
 
-<article class="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10" data-pagefind-body>
-  <section class="grid gap-6 sm:grid-cols-[13.5rem_minmax(0,1fr)] sm:items-center">
-    <img src={coverSrc} alt={`${song.title} cover art`} class="aspect-square w-full max-w-56 rounded-lg border border-white/10 object-cover shadow-2xl shadow-black/40 sm:max-w-none" />
+<article class="mx-auto max-w-7xl px-4 pb-36 pt-7 sm:px-6 sm:pt-11 lg:px-10" data-pagefind-body>
+  <section class="grid gap-6 lg:grid-cols-[13.5rem_minmax(0,1fr)] xl:grid-cols-[13.5rem_minmax(0,1fr)]">
+    <img src={coverSrc} alt={`${song.title} cover art`} class="aspect-square w-full max-w-56 rounded-[8px] border border-white/14 object-cover shadow-[0_22px_80px_rgba(0,0,0,0.5)] lg:max-w-none" />
 
-    <div class="min-w-0">
-      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-muted">Song</p>
-      <h1 class="text-4xl font-bold tracking-normal text-ink sm:text-5xl" data-pagefind-meta="title">{song.title}</h1>
-      <div class="mt-3 flex items-center gap-2 text-2xl font-semibold">
-        <span>{song.artist}</span>
-      </div>
-      <p class="mt-4 text-sm leading-6 text-muted">
-        From the album <span class="font-semibold uppercase tracking-[0.08em] text-peach-strong">{song.album}</span>
+    <div class="min-w-0 self-center">
+      <p class="mb-1 text-sm text-muted">
+        <span class="text-ink/80">{album}</span>
+        <span aria-hidden="true"> · </span>
+        <span>{formattedDate}</span>
       </p>
-      <p class="text-sm leading-6 text-muted">{song.releaseDate} <span aria-hidden="true">•</span> {song.duration} <span aria-hidden="true">•</span> {song.genre}</p>
-
-      <div class="mt-5 flex flex-wrap gap-3">
-        <a href="#lyrics" class="inline-flex h-11 items-center gap-2 rounded-lg bg-peach px-5 text-sm font-bold text-[#251211] no-underline shadow-lg shadow-peach/10 transition hover:bg-peach-strong">
-          <Play size={17} fill="currentColor" />
-          Play
+      <h1 class="max-w-3xl text-[2.15rem] font-extrabold leading-[1.02] tracking-normal text-ink sm:text-5xl" data-pagefind-meta="title">{song.title}</h1>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <a href={`${base}${localizedPath(locale, "/").replace(/^\//, "")}`} class="inline-flex h-10 items-center gap-2 rounded-full bg-white/17 px-3.5 text-sm font-bold text-ink no-underline shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition hover:bg-white/24">
+          <img src={`${base}avatars/aimi.svg`} alt="" class="size-6 rounded-full" />
+          {song.artist}
         </a>
-        <button type="button" class="inline-flex h-11 items-center gap-2 rounded-lg border border-white/12 bg-white/5 px-4 text-sm font-semibold text-ink transition hover:bg-white/9">
-          <CirclePlus size={18} />
-          Add to library
+        <span class="text-sm text-muted">{song.duration}</span>
+        <span class="text-sm text-muted">{genre}</span>
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center gap-2.5">
+        <a href="#lyrics" class="grid size-13 place-items-center rounded-full bg-peach text-white no-underline shadow-[0_10px_28px_rgba(255,81,56,0.25)] transition hover:bg-peach-strong" aria-label={t("song.play")}>
+          <Play size={22} fill="currentColor" />
+        </a>
+        <button type="button" class="inline-flex h-13 items-center gap-3 rounded-[8px] bg-white/17 px-5 text-base font-bold text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] transition hover:bg-white/24">
+          <Share2 size={22} />
+          {t("song.share")}
         </button>
-        <button type="button" class="inline-flex h-11 items-center gap-2 rounded-lg border border-white/12 bg-white/5 px-4 text-sm font-semibold text-ink transition hover:bg-white/9">
-          <Share2 size={18} />
-          Share
-        </button>
-        <button type="button" class="grid size-11 place-items-center rounded-lg border border-white/12 bg-white/5 text-ink transition hover:bg-white/9" aria-label="More actions">
-          <Ellipsis size={20} />
+        <button type="button" class="grid size-13 place-items-center rounded-[8px] bg-white/17 text-ink transition hover:bg-white/24 sm:hidden" aria-label={t("song.moreActions")}>
+          <Ellipsis size={22} />
         </button>
       </div>
     </div>
   </section>
 
-  <div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem] xl:grid-cols-[minmax(0,1fr)_27rem]">
+  <div class="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] xl:grid-cols-[minmax(0,1fr)_27rem]">
     <div class="min-w-0">
-      <section id="lyrics" class="mt-8 max-w-4xl scroll-mt-28" aria-label={`${song.title} lyrics`}>
-        {song.lyrics.map((section) => (
-          <div class="mb-6">
-            <h2 class="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted">{section.label}</h2>
-            <div class="space-y-1 text-[1.04rem] leading-7 text-ink">
-              {section.lines.map((line) => {
-                const annotation = line.annotationId ? song.annotations[line.annotationId] : undefined;
-                return (
-                  <button
-                    type="button"
-                    class:list={[
-                      "block w-full rounded-md px-0 py-0.5 text-left transition",
-                      annotation ? "cursor-pointer text-ink underline decoration-peach/55 decoration-1 underline-offset-4 hover:bg-peach/10 focus-visible:bg-peach/10 focus-visible:outline focus-visible:outline-1 focus-visible:outline-peach/45" : "cursor-default text-ink/42",
-                      line.highlighted ? "text-ink" : "",
-                    ]}
-                    disabled={!annotation}
-                    data-annotation-lyric={annotation?.lyric}
-                    data-annotation-body={annotation?.body}
-                    onmouseenter={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
-                    onfocus={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
-                    onclick={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
-                  >
-                    <span>{line.text}</span>
-                  </button>
-                );
-              })}
+      <section id="lyrics" class="max-w-4xl scroll-mt-28" aria-label={t("song.lyricsLabel", { title: song.title })}>
+        {song.lyrics.map((section) => {
+          const sectionLabel = translation?.lyricSectionLabels?.[section.label] ?? section.label;
+          return (
+            <div class="mb-9">
+              <h3 class="mb-3 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-muted/70">{sectionLabel}</h3>
+              <div class="text-[1.08rem] font-medium leading-[1.5] sm:text-[1.16rem]">
+                {section.lines.map((line) => {
+                  const annotation = line.annotationId ? mergedAnnotations[line.annotationId] : undefined;
+                  return (
+                    <div class={line.gap ? "pb-6" : "pb-1 last:pb-0"} data-line={line.annotationId}>
+                      <button
+                        type="button"
+                        class:list={[
+                          "block w-full rounded-[4px] px-0 py-0.5 text-left",
+                          annotation ? "cursor-pointer text-ink underline decoration-white/30 decoration-1 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-peach/55" : "cursor-default text-ink/45",
+                          line.highlighted ? "text-ink" : "",
+                        ]}
+                        disabled={!annotation}
+                        data-annotation-id={line.annotationId}
+                        data-annotation-lyric={annotation?.lyric}
+                        data-annotation-literal={annotation?.literal}
+                        data-annotation-body={annotation?.explanation ?? annotation?.body}
+                        onmouseenter={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
+                        onfocus={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
+                        onclick={annotation ? "window.setLyricMeaningFromLine?.(this)" : undefined}
+                      >
+                        <span>{line.text}</span>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-
-        <button type="button" class="mt-1 inline-flex h-10 items-center rounded-lg border border-white/12 bg-white/5 px-3 text-sm text-ink transition hover:bg-white/9">
-          Show more
-        </button>
+          );
+        })}
       </section>
     </div>
 
-    <aside class="space-y-4 lg:sticky lg:top-24 lg:self-start">
-      <section class="rounded-lg border border-white/10 bg-white/[0.045] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-        <div class="mb-4 flex items-center justify-between gap-4">
-          <h2 class="text-lg font-semibold">{song.story.title}</h2>
-          <BookOpen size={21} class="text-ink/80" />
+    <aside class="space-y-4 lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:self-start">
+      <section class="overflow-hidden rounded-[24px] border border-white/18 bg-[#121212] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_24px_70px_rgba(0,0,0,0.35)]">
+        <div class="flex items-center justify-between gap-4 p-5">
+          <h2 class="text-lg font-bold text-ink">{storyTitle}</h2>
+          <BookOpen size={20} class="text-ink/55" />
         </div>
-        <p class="max-h-28 overflow-hidden text-sm leading-6 text-ink/78">{song.story.body}</p>
-        <button type="button" class="mt-5 inline-flex h-10 items-center rounded-lg border border-white/12 bg-white/5 px-3 text-sm text-ink transition hover:bg-white/9" onclick="document.querySelector('[data-story-dialog]')?.showModal()">
-          Read full story
-        </button>
+        <div class="px-5 pb-5">
+          <p class="line-clamp-5 text-sm font-normal leading-6 text-ink/72">{storyBody}</p>
+          <button type="button" class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-peach transition hover:text-peach-strong" onclick="document.querySelector('[data-story-dialog]')?.showModal()">
+            {t("song.readFullStory")}
+            <ArrowRight size={14} stroke-width={2.5} />
+          </button>
+        </div>
       </section>
 
       {firstAnnotation && (
-        <section class="rounded-lg border border-peach/20 bg-white/[0.045] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]" aria-live="polite">
-          <p class="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted">Lyric Meaning</p>
-          <p class="mb-4 whitespace-pre-line text-sm font-semibold leading-6 text-peach-strong" data-meaning-lyric>{firstAnnotation.lyric}</p>
-          <p class="text-sm leading-6 text-ink/78" data-meaning-body>{firstAnnotation.body}</p>
+        <section class="overflow-hidden rounded-[24px] border border-white/18 bg-[#121212] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_24px_70px_rgba(0,0,0,0.35)]" aria-live="polite">
+          <div class="flex items-center justify-between gap-4 p-5">
+            <h2 class="text-lg font-bold text-ink">{t("song.lyricMeaning")}</h2>
+            <Sparkles size={18} class="text-peach" />
+          </div>
+          <div class="px-5 pb-5 space-y-3">
+            <p class="whitespace-pre-line text-sm font-medium leading-6 text-peach-strong" data-meaning-lyric>{firstAnnotation.lyric}</p>
+            {firstAnnotation.literal && (
+              <p class="whitespace-pre-line text-sm leading-6 text-ink/55" data-meaning-literal>{firstAnnotation.literal}</p>
+            )}
+            <p class="whitespace-pre-line text-sm font-normal leading-6 text-ink/72" data-meaning-body>{firstAnnotation.explanation ?? firstAnnotation.body}</p>
+          </div>
         </section>
       )}
     </aside>
   </div>
 
-  <div class="mt-6 grid gap-4 lg:grid-cols-[1fr_1fr_24rem] xl:grid-cols-[1fr_1fr_27rem]">
-    <TagList title="Themes" items={song.themes} icon={Tag} />
-    <TagList title="Moods" items={song.moods} icon={Smile} />
-    <section class="rounded-lg border border-white/10 bg-white/[0.045] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-5">
-      <h2 class="mb-3 flex items-center gap-2 text-base font-semibold">
-        <Users size={20} />
-        Credits
-      </h2>
-      <ul class="space-y-1 text-sm leading-5 text-ink/78">
-        {song.credits.map((credit) => <li>{credit}</li>)}
-      </ul>
-    </section>
-  </div>
-
-  <section class="mt-10 border-t border-white/9 pt-6">
-    <div class="mb-4 flex items-center justify-between gap-4">
-      <h2 class="text-lg font-semibold">More from aimi</h2>
-      <a href={base} class="text-sm text-muted no-underline transition hover:text-ink">View all</a>
-    </div>
-    <div class="grid gap-3 sm:grid-cols-3">
-      {song.relatedSongs.map((related) => (
-        <a href={`${base}songs/${related.slug}/`} class="rounded-lg border border-white/10 bg-white/[0.04] p-4 no-underline transition hover:border-peach/35 hover:bg-white/[0.07]">
-          <p class="font-semibold">{related.title}</p>
-          <p class="mt-1 text-sm text-muted">{related.album}</p>
-        </a>
-      ))}
+  <section class="mt-12 border-t border-white/10 pt-6">
+    <div class="grid gap-x-12 gap-y-7 sm:grid-cols-3">
+      <div>
+        <h3 class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-muted/70">{t("song.themes")}</h3>
+        <p class="mt-3 text-sm font-normal leading-6 text-ink/82">{themes.join(", ")}</p>
+      </div>
+      <div>
+        <h3 class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-muted/70">{t("song.moods")}</h3>
+        <p class="mt-3 text-sm font-normal leading-6 text-ink/82">{moods.join(", ")}</p>
+      </div>
+      <div>
+        <h3 class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-muted/70">{t("song.credits")}</h3>
+        <p class="mt-3 text-sm font-normal leading-6 text-ink/82">{credits.join(" · ")}</p>
+      </div>
     </div>
   </section>
 
-  <dialog class="m-auto w-[min(42rem,calc(100vw-2rem))] rounded-lg border border-white/12 bg-[#171a20] p-0 text-ink shadow-2xl shadow-black/50 backdrop:bg-black/70" data-story-dialog>
-    <div class="flex items-center justify-between gap-4 border-b border-white/10 p-5">
-      <h2 class="text-lg font-semibold">{song.story.title}</h2>
-      <button type="button" class="grid size-9 place-items-center rounded-full text-muted transition hover:bg-white/8 hover:text-ink" aria-label="Close story" onclick="document.querySelector('[data-story-dialog]')?.close()">
-        <X size={19} />
+
+
+  <div class="fixed inset-x-3 bottom-3 z-30 mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-[14px] bg-[#242424]/96 p-3 shadow-[0_18px_80px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:inset-x-8 sm:grid-cols-[15rem_1fr_auto]">
+    <div class="flex min-w-0 items-center gap-3">
+      <img src={coverSrc} alt="" class="size-12 rounded-[6px] object-cover" />
+      <div class="min-w-0">
+        <p class="truncate text-sm font-bold">{song.title}</p>
+        <p class="truncate text-sm text-ink/78">{song.artist}</p>
+      </div>
+    </div>
+    <div class="hidden min-w-0 items-center gap-4 sm:flex">
+      <button type="button" class="grid size-12 shrink-0 place-items-center rounded-full bg-white/17 text-ink transition hover:bg-white/24" aria-label={t("song.play")}>
+        <Play size={19} fill="currentColor" />
+      </button>
+      <div class="relative h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-white/35">
+        <div class="absolute inset-y-0 left-0 w-[18%] rounded-full bg-peach"></div>
+      </div>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <button type="button" class="grid size-10 place-items-center rounded-full text-ink transition hover:bg-white/10" aria-label={t("song.mute")}>
+        <X size={18} />
+      </button>
+      <button type="button" class="grid size-10 place-items-center rounded-full bg-white/12 text-ink transition hover:bg-white/20" aria-label={t("song.lyricsPanel")}>
+        <MicVocal size={18} />
+      </button>
+      <button type="button" class="grid size-10 place-items-center rounded-full bg-white/12 text-ink transition hover:bg-white/20" aria-label={t("song.queue")}>
+        <ListMusic size={19} />
       </button>
     </div>
-    <div class="max-h-[70vh] overflow-auto p-5">
-      <p class="text-sm leading-7 text-ink/82">{song.story.body}</p>
-    </div>
-  </dialog>
+  </div>
 </article>
+
+<dialog class="m-auto w-[min(42rem,calc(100vw-2rem))] overflow-hidden rounded-[24px] border border-white/18 bg-[#121212] p-0 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_24px_70px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,0,0,0.4)] backdrop:bg-black/72 backdrop:backdrop-blur-md" data-story-dialog>
+  <div class="flex items-center justify-between gap-4 border-b border-white/12 px-6 py-5">
+    <div class="flex items-center gap-3">
+      <span class="grid size-9 place-items-center rounded-[10px] bg-white/10 text-ink/80">
+        <BookOpen size={18} />
+      </span>
+      <h2 class="text-lg font-bold">{storyTitle}</h2>
+    </div>
+    <button type="button" class="grid size-9 place-items-center rounded-full text-ink/60 transition hover:bg-white/8 hover:text-ink" aria-label={t("song.closeStory")} onclick="document.querySelector('[data-story-dialog]')?.close()">
+      <X size={19} />
+    </button>
+  </div>
+  <div class="max-h-[70vh] overflow-auto px-6 py-6">
+    <p class="whitespace-pre-line text-sm font-normal leading-7 text-ink/78">{storyBody}</p>
+  </div>
+</dialog>
 
 <script is:inline>
   const meaningLyric = document.querySelector("[data-meaning-lyric]");
+  const meaningLiteral = document.querySelector("[data-meaning-literal]");
   const meaningBody = document.querySelector("[data-meaning-body]");
+  const groupStyle = document.createElement("style");
+  groupStyle.textContent = "[data-line][data-annotation-active]{background-color:rgba(255,255,255,0.12)}";
+  document.head.appendChild(groupStyle);
 
   window.setLyricMeaningFromLine = (line) => {
     const lyric = line.getAttribute("data-annotation-lyric");
+    const literal = line.getAttribute("data-annotation-literal");
     const body = line.getAttribute("data-annotation-body");
+    const id = line.getAttribute("data-annotation-id");
     if (!lyric || !body || !meaningLyric || !meaningBody) return;
 
     meaningLyric.textContent = lyric;
+    if (meaningLiteral) {
+      meaningLiteral.textContent = literal;
+      meaningLiteral.style.display = literal ? "" : "none";
+    }
     meaningBody.textContent = body;
+
+    document.querySelectorAll("[data-line][data-annotation-active]").forEach((el) => {
+      el.removeAttribute("data-annotation-active");
+    });
+    if (id) {
+      document.querySelectorAll(`[data-line="${id}"]`).forEach((el) => {
+        el.setAttribute("data-annotation-active", "true");
+      });
+    }
   };
 
   const storyDialog = document.querySelector("[data-story-dialog]");

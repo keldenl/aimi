@@ -7,6 +7,7 @@ const lyricLine = z.object({
   text: z.string(),
   annotationId: z.string().optional(),
   highlighted: z.boolean().optional(),
+  gap: z.boolean().optional(),
 });
 
 const songs = defineCollection({
@@ -41,14 +42,30 @@ const songs = defineCollection({
     themes: z.array(z.string()),
     moods: z.array(z.string()),
     credits: z.array(z.string()),
-    relatedSongs: z.array(
-      z.object({
-        title: z.string(),
-        slug: z.string(),
-        album: z.string(),
-      }),
-    ),
+
   }),
 });
 
-export const collections = { songs };
+const translations = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/translations/zh-TW/songs" }),
+  schema: z.object({
+    lyricSectionLabels: z.record(z.string(), z.string()).optional(),
+    album: z.string().optional(),
+    genre: z.string().optional(),
+    story: z.object({
+      title: z.string().optional(),
+      body: z.string().optional(),
+    }).optional(),
+    annotations: z.record(
+      z.string(),
+      z.object({
+        body: z.string(),
+      }),
+    ).optional(),
+    themes: z.array(z.string()).optional(),
+    moods: z.array(z.string()).optional(),
+    credits: z.array(z.string()).optional(),
+  }),
+});
+
+export const collections = { songs, translations };

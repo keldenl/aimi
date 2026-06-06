@@ -1,0 +1,37 @@
+---
+const locale = Astro.currentLocale ?? "en";
+const targetLocale = locale === "zh-TW" ? "en" : "zh-TW";
+const base = import.meta.env.BASE_URL;
+
+const baseClean = base.endsWith("/") ? base.slice(0, -1) : base;
+
+// Get the current path relative to site root
+let path = Astro.url.pathname;
+
+// Strip base
+if (path.startsWith(baseClean)) {
+  path = path.slice(baseClean.length) || "/";
+}
+
+// Strip current locale prefix
+const localePrefix = locale === "en" ? "" : `/${locale}`;
+if (localePrefix && path.startsWith(localePrefix)) {
+  path = path.slice(localePrefix.length) || "/";
+}
+if (!path.startsWith("/")) path = `/${path}`;
+if (path !== "/" && !path.endsWith("/")) path = `${path}/`;
+
+// Build target URL
+let targetUrl = targetLocale === "en" ? `${baseClean}${path}` : `${baseClean}/${targetLocale}${path}`;
+targetUrl = targetUrl.replace(/\/+/g, "/");
+---
+
+<a
+  href={targetUrl}
+  class="inline-flex h-8 items-center gap-1.5 rounded-full bg-white/8 px-3 text-[0.68rem] font-bold tracking-wider text-ink/70 transition hover:bg-white/14 hover:text-ink"
+  aria-label={locale === "en" ? "Switch to Chinese" : "切換至英文"}
+>
+  <span class={locale === "zh-TW" ? "text-peach-strong" : "text-muted"}>中文</span>
+  <span class="text-muted/40">/</span>
+  <span class={locale === "en" ? "text-peach-strong" : "text-muted"}>EN</span>
+</a>

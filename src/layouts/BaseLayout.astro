@@ -1,40 +1,47 @@
 ---
 import "../styles/global.css";
 import { Search } from "@lucide/astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+import { useT, localizedPath } from "../lib/i18n";
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "Songs and lyric notes from aimi." } = Astro.props;
+const { title, description } = Astro.props;
+const locale = Astro.currentLocale ?? "en";
+const t = useT(locale);
 const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const metaDescription = description ?? t("home.tagline");
+const homeUrl = `${base}${localizedPath(locale, "/").replace(/^\//, "")}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale === "zh-TW" ? "zh-Hant" : "en"}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     <title>{title}</title>
     <link rel="icon" href={`${base}favicon.svg`} />
   </head>
   <body>
     <div class="min-h-screen bg-[#0d1015]">
       <header class="sticky top-0 z-20 border-b border-white/8 bg-[#0d1015]/92 backdrop-blur-xl">
-        <nav class="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10" aria-label="Primary navigation">
-          <a href={base} class="flex min-w-0 items-center gap-3 no-underline">
+        <nav class="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10" aria-label={t("nav.primary")}>
+          <a href={homeUrl} class="flex min-w-0 items-center gap-3 no-underline">
             <span class="grid size-10 place-items-center rounded-full text-peach" aria-hidden="true">
               <svg viewBox="0 0 42 42" class="size-9">
                 <path d="M4 27c4-18 7-18 10 0 3-28 6-28 9 0 3-21 6-21 9 0 2-13 5-13 6 0" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
-            <span class="truncate text-base font-semibold text-peach-strong">aimi music</span>
+            <span class="truncate text-base font-semibold text-peach-strong">{t("nav.siteTitle")}</span>
           </a>
 
           <div class="flex items-center gap-2 text-muted">
-            <a href={`${base}search/`} class="grid size-10 place-items-center rounded-full transition hover:bg-white/8 hover:text-ink" aria-label="Search">
+            <LanguageSwitcher />
+            <a href={`${base}${localizedPath(locale, "/search/").replace(/^\//, "")}`} class="grid size-10 place-items-center rounded-full transition hover:bg-white/8 hover:text-ink" aria-label={t("nav.search")}>
               <Search size={19} />
             </a>
           </div>

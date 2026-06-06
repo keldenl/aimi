@@ -11,6 +11,14 @@ export default defineConfig({
   site: process.env.SITE_URL ?? `https://${owner}.github.io`,
   base: process.env.BASE_PATH ?? (isGitHubPages ? `/${repoName}` : "/"),
   output: "static",
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "zh-TW"],
+    routing: {
+      prefixDefaultLocale: false,
+      redirectToDefaultLocale: false,
+    },
+  },
   server: {
     host: devHost ?? false,
     port: Number.isFinite(devPort) ? devPort : undefined,
