@@ -19,6 +19,7 @@
     "@lucide/astro": "^1.17.0",
     "@tailwindcss/vite": "latest",
     "astro": "latest",
+    "motion": "^12.40.0",
     "tailwindcss": "latest"
   },
   "devDependencies": {

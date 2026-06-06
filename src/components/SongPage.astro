@@ -230,9 +230,14 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
   const meaningLyric = document.querySelector("[data-meaning-lyric]");
   const meaningLiteral = document.querySelector("[data-meaning-literal]");
   const meaningBody = document.querySelector("[data-meaning-body]");
-  const groupStyle = document.createElement("style");
-  groupStyle.textContent = "[data-line][data-annotation-active]{background-color:rgba(255,255,255,0.12)}";
-  document.head.appendChild(groupStyle);
+  const meaningContainer = meaningLyric?.parentElement;
+
+  const style = document.createElement("style");
+  style.textContent = `
+    [data-line] { transition: background-color 0.2s ease; }
+    [data-line][data-annotation-active] { background-color: rgba(255,255,255,0.12); }
+  `;
+  document.head.appendChild(style);
 
   window.setLyricMeaningFromLine = (line) => {
     const lyric = line.getAttribute("data-annotation-lyric");
@@ -241,12 +246,25 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
     const id = line.getAttribute("data-annotation-id");
     if (!lyric || !body || !meaningLyric || !meaningBody) return;
 
-    meaningLyric.textContent = lyric;
-    if (meaningLiteral) {
-      meaningLiteral.textContent = literal;
-      meaningLiteral.style.display = literal ? "" : "none";
-    }
-    meaningBody.textContent = body;
+    if (meaningLyric.textContent === lyric && meaningBody.textContent === body) return;
+
+    const fadeOut = meaningContainer.animate(
+      [{ opacity: 1 }, { opacity: 0 }],
+      { duration: 100, easing: "ease-out" }
+    );
+    fadeOut.onfinish = () => {
+      meaningLyric.textContent = lyric;
+      if (meaningLiteral) {
+        meaningLiteral.textContent = literal;
+        meaningLiteral.style.display = literal ? "" : "none";
+      }
+      meaningBody.textContent = body;
+
+      meaningContainer.animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        { duration: 150, easing: "ease-out" }
+      );
+    };
 
     document.querySelectorAll("[data-line][data-annotation-active]").forEach((el) => {
       el.removeAttribute("data-annotation-active");
@@ -259,10 +277,42 @@ const firstAnnotation = Object.values(mergedAnnotations)[0];
   };
 
   const storyDialog = document.querySelector("[data-story-dialog]");
-
   storyDialog?.addEventListener("click", (event) => {
     if (event.target === storyDialog && storyDialog instanceof HTMLDialogElement) {
       storyDialog.close();
     }
+  });
+</script>
+
+<script>
+  import { animate } from "motion";
+
+  const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+  document.querySelectorAll("article > section:first-child > *").forEach((raw, i) => {
+    const el = raw as HTMLElement;
+    animate(
+      el,
+      { opacity: [0, 1], y: [24, 0], filter: ["blur(4px)", "blur(0px)"] },
+      { duration: 0.6, ease, delay: i * 0.08 }
+    );
+  });
+
+  document.querySelectorAll("#lyrics > div").forEach((raw, i) => {
+    const el = raw as HTMLElement;
+    animate(
+      el,
+      { opacity: [0, 1], y: [20, 0] },
+      { duration: 0.5, ease, delay: i * 0.06 + 0.15 }
+    );
+  });
+
+  document.querySelectorAll("aside > section").forEach((raw, i) => {
+    const el = raw as HTMLElement;
+    animate(
+      el,
+      { opacity: [0, 1], y: [16, 0] },
+      { duration: 0.5, ease, delay: i * 0.08 + 0.3 }
+    );
   });
 </script>
