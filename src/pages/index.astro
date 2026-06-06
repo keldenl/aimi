@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { ArrowRight, Search } from "@lucide/astro";
+
+const songs = await getCollection("songs");
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const featured = songs.find((song) => song.data.slug === "nightlight") ?? songs[0];
+---
+
+<BaseLayout title="aimi music">
+  <section class="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_26rem] lg:px-10 lg:py-12">
+    <div class="min-w-0">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-peach">aimi music</p>
+      <h1 class="max-w-3xl text-4xl font-bold tracking-normal sm:text-6xl">Songs, lyrics, and stories from aimi.</h1>
+      <p class="mt-5 max-w-2xl text-base leading-7 text-muted">A compact, static archive for songs, lyric notes, credits, and the quiet details around each release.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={`${base}songs/${featured.data.slug}/`} class="inline-flex h-11 items-center gap-2 rounded-lg bg-peach px-5 text-sm font-bold text-[#251211] no-underline transition hover:bg-peach-strong">
+          Explore Nightlight
+          <ArrowRight size={17} />
+        </a>
+        <a href={`${base}search/`} class="inline-flex h-11 items-center gap-2 rounded-lg border border-white/12 bg-white/5 px-5 text-sm font-semibold no-underline transition hover:bg-white/9">
+          <Search size={18} />
+          Search songs
+        </a>
+      </div>
+    </div>
+
+    <a href={`${base}songs/${featured.data.slug}/`} class="group block rounded-lg border border-white/10 bg-white/[0.045] p-4 no-underline shadow-2xl shadow-black/25 transition hover:border-peach/35 hover:bg-white/[0.07]">
+      <img src={`${base}${featured.data.coverImage.replace(/^\//, "")}`} alt={`${featured.data.title} cover art`} class="aspect-square w-full rounded-md object-cover" />
+      <p class="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-muted">Featured Song</p>
+      <h2 class="mt-1 text-2xl font-bold">{featured.data.title}</h2>
+      <p class="mt-1 text-sm text-muted">{featured.data.album}</p>
+    </a>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-10">
+    <h2 class="mb-4 text-lg font-semibold">Songs</h2>
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {songs.map((song) => (
+        <a href={`${base}songs/${song.data.slug}/`} class="rounded-lg border border-white/10 bg-white/[0.04] p-4 no-underline transition hover:border-peach/35 hover:bg-white/[0.07]">
+          <p class="font-semibold">{song.data.title}</p>
+          <p class="mt-1 text-sm text-muted">{song.data.album} <span aria-hidden="true">•</span> {song.data.duration}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

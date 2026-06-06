@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const songs = await getCollection("songs");
+const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+
+<BaseLayout title="Stories | aimi music" description="Behind-the-song notes from aimi.">
+  <section class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-peach">Stories</p>
+    <h1 class="text-4xl font-bold tracking-normal sm:text-5xl">Behind the songs.</h1>
+    <div class="mt-8 grid gap-4">
+      {songs.map((song) => (
+        <a href={`${base}songs/${song.data.slug}/`} class="rounded-lg border border-white/10 bg-white/[0.045] p-5 no-underline transition hover:border-peach/35 hover:bg-white/[0.07]">
+          <p class="text-sm font-semibold text-peach">{song.data.title}</p>
+          <h2 class="mt-1 text-xl font-semibold">{song.data.story.title}</h2>
+          <p class="mt-3 text-sm leading-6 text-muted">{song.data.story.body}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

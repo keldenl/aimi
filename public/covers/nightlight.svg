@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="Nightlight cover">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a1518"/>
+      <stop offset=".45" stop-color="#151016"/>
+      <stop offset="1" stop-color="#5f251f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".68" cy=".2" r=".6">
+      <stop offset="0" stop-color="#ff7d5f" stop-opacity=".9"/>
+      <stop offset=".42" stop-color="#d8493f" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#101216" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <rect width="1200" height="1200" fill="url(#glow)"/>
+  <path d="M0 245c300 35 508-38 730-245h470v1200H0z" fill="#07090c" opacity=".42"/>
+  <g filter="url(#soft)" opacity=".65">
+    <path d="M915-20 1160 28 552 676 390 614z" fill="#ff6d54"/>
+    <path d="M1052 171 1200 199 785 640 676 595z" fill="#ffb0a4"/>
+  </g>
+  <circle cx="526" cy="573" r="244" fill="#0c0d11" opacity=".55"/>
+  <path d="M433 782c-80-31-126-96-135-177-11-102 34-191 121-239 36-20 77-31 121-31 68 0 124 23 171 68-93 23-153 76-179 158-23 73-11 146 36 220-49 17-104 17-135 1z" fill="#15161b"/>
+  <path d="M358 464c70-91 191-118 290-64 29 16 55 37 78 65-98-21-177 1-237 67-59 65-77 145-52 241-87-26-143-96-155-183-5-43 3-93 76-126z" fill="#232029" opacity=".86"/>
+  <text x="88" y="188" fill="#ffd1ca" font-family="Georgia, serif" font-size="96" font-style="italic">Nightlight</text>
+  <text x="942" y="1068" fill="#fff4f2" font-family="Inter, Arial, sans-serif" font-size="88" font-weight="700">aimi</text>
+</svg>

@@ -1,0 +1,40 @@
+{
+  "slug": "paper-moon",
+  "title": "Paper Moon",
+  "artist": "aimi",
+  "album": "Rooms We Outgrow",
+  "releaseDate": "May 3, 2024",
+  "duration": "3:12",
+  "genre": "Alternative Pop",
+  "coverImage": "/covers/nightlight.svg",
+  "story": {
+    "title": "Story Behind the Song",
+    "body": "“Paper Moon” follows a small promise that survives a difficult season."
+  },
+  "lyrics": [
+    {
+      "label": "Verse 1",
+      "lines": [
+        {
+          "id": "v1-1",
+          "text": "I taped a moon above the door"
+        },
+        {
+          "id": "v1-2",
+          "text": "So leaving felt like less than war"
+        }
+      ]
+    }
+  ],
+  "annotations": {},
+  "themes": ["Promises", "Distance"],
+  "moods": ["Tender", "Quiet"],
+  "credits": ["Written by aimi", "Produced by Nolan Grant"],
+  "relatedSongs": [
+    {
+      "title": "Nightlight",
+      "slug": "nightlight",
+      "album": "Rooms We Outgrow"
+    }
+  ]
+}

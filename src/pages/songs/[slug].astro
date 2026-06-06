@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SongPage from "../../components/SongPage.astro";
+
+export async function getStaticPaths() {
+  const songs = await getCollection("songs");
+  return songs.map((song) => ({
+    params: { slug: song.data.slug },
+    props: { song: song.data },
+  }));
+}
+
+const { song } = Astro.props;
+---
+
+<BaseLayout title={`${song.title} | aimi music`} description={`${song.title} lyrics, story, themes, and credits by aimi.`}>
+  <SongPage song={song} />
+</BaseLayout>

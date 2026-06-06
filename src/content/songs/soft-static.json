@@ -1,0 +1,40 @@
+{
+  "slug": "soft-static",
+  "title": "Soft Static",
+  "artist": "aimi",
+  "album": "Rooms We Outgrow",
+  "releaseDate": "June 14, 2024",
+  "duration": "2:58",
+  "genre": "Alternative Pop",
+  "coverImage": "/covers/nightlight.svg",
+  "story": {
+    "title": "Story Behind the Song",
+    "body": "“Soft Static” is a late-night song about learning to hear yourself again."
+  },
+  "lyrics": [
+    {
+      "label": "Verse 1",
+      "lines": [
+        {
+          "id": "v1-1",
+          "text": "All the wires hum your name"
+        },
+        {
+          "id": "v1-2",
+          "text": "I let the quiet do the same"
+        }
+      ]
+    }
+  ],
+  "annotations": {},
+  "themes": ["Solitude", "Recovery"],
+  "moods": ["Late Night", "Reflective"],
+  "credits": ["Written by aimi", "Produced by Nolan Grant"],
+  "relatedSongs": [
+    {
+      "title": "Nightlight",
+      "slug": "nightlight",
+      "album": "Rooms We Outgrow"
+    }
+  ]
+}

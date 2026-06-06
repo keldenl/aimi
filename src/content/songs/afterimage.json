@@ -1,0 +1,40 @@
+{
+  "slug": "afterimage",
+  "title": "Afterimage",
+  "artist": "aimi",
+  "album": "Rooms We Outgrow",
+  "releaseDate": "July 26, 2024",
+  "duration": "3:21",
+  "genre": "Alternative Pop",
+  "coverImage": "/covers/nightlight.svg",
+  "story": {
+    "title": "Story Behind the Song",
+    "body": "“Afterimage” is about the moment a memory stops asking to be solved and starts becoming part of the light."
+  },
+  "lyrics": [
+    {
+      "label": "Verse 1",
+      "lines": [
+        {
+          "id": "v1-1",
+          "text": "You pass through rooms I painted blue"
+        },
+        {
+          "id": "v1-2",
+          "text": "A little light I never knew"
+        }
+      ]
+    }
+  ],
+  "annotations": {},
+  "themes": ["Memory", "Acceptance"],
+  "moods": ["Reflective", "Warm"],
+  "credits": ["Written by aimi", "Produced by Nolan Grant"],
+  "relatedSongs": [
+    {
+      "title": "Nightlight",
+      "slug": "nightlight",
+      "album": "Rooms We Outgrow"
+    }
+  ]
+}

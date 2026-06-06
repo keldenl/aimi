@@ -1,0 +1,125 @@
+{
+  "slug": "nightlight",
+  "title": "Nightlight",
+  "artist": "aimi",
+  "album": "Rooms We Outgrow",
+  "releaseDate": "April 12, 2024",
+  "duration": "3:38",
+  "genre": "Alternative Pop",
+  "coverImage": "/covers/nightlight.svg",
+  "story": {
+    "title": "Story Behind the Song",
+    "body": "“Nightlight” was written on a sleepless train ride home. It is about holding on to the warmth of someone who is no longer there, those small reminders that still guide you in the dark."
+  },
+  "lyrics": [
+    {
+      "label": "Verse 1",
+      "lines": [
+        {
+          "id": "v1-1",
+          "text": "The city hums while I’m wide awake"
+        },
+        {
+          "id": "v1-2",
+          "text": "Neon spills across my pillowcase"
+        },
+        {
+          "id": "v1-3",
+          "text": "You left a note, the kind that stays",
+          "annotationId": "note-that-stays",
+          "highlighted": true
+        },
+        {
+          "id": "v1-4",
+          "text": "I fold it small, then forget to place"
+        }
+      ]
+    },
+    {
+      "label": "Pre-chorus",
+      "lines": [
+        {
+          "id": "pc-1",
+          "text": "Maybe time will sand the edges down"
+        },
+        {
+          "id": "pc-2",
+          "text": "But some shapes never leave the ground"
+        }
+      ]
+    },
+    {
+      "label": "Chorus",
+      "lines": [
+        {
+          "id": "c-1",
+          "text": "You’re my nightlight, you don’t fade"
+        },
+        {
+          "id": "c-2",
+          "text": "When the room goes quiet and the thoughts get loud"
+        },
+        {
+          "id": "c-3",
+          "text": "You’re the soft glow I can’t replace"
+        },
+        {
+          "id": "c-4",
+          "text": "Even when I know I should"
+        }
+      ]
+    },
+    {
+      "label": "Verse 2",
+      "lines": [
+        {
+          "id": "v2-1",
+          "text": "I water ghosts, they grow on cue"
+        },
+        {
+          "id": "v2-2",
+          "text": "Petals made of all the things we didn’t do"
+        },
+        {
+          "id": "v2-3",
+          "text": "I talk to walls, they talk back too"
+        },
+        {
+          "id": "v2-4",
+          "text": "Say it’s normal, I don’t think it’s true"
+        }
+      ]
+    }
+  ],
+  "annotations": {
+    "note-that-stays": {
+      "lyric": "You left a note, the kind that stays",
+      "body": "This line reflects on the lasting impact of someone’s parting words. Even though the person is gone, the note and what it represents linger. It is a reminder of comfort, love, and unfinished conversations."
+    }
+  },
+  "themes": ["Memory", "Letting Go", "Healing", "Nostalgia"],
+  "moods": ["Melancholic", "Reflective", "Tender", "Late Night"],
+  "credits": [
+    "Written by aimi",
+    "Produced by Nolan Grant",
+    "Mixed by Evren Furtuna",
+    "Mastered by Emily Lazar"
+  ],
+  "relatedSongs": [
+    {
+      "title": "Paper Moon",
+      "slug": "paper-moon",
+      "album": "Rooms We Outgrow"
+    },
+    {
+      "title": "Soft Static",
+      "slug": "soft-static",
+      "album": "Rooms We Outgrow"
+    },
+    {
+      "title": "Afterimage",
+      "slug": "afterimage",
+      "album": "Rooms We Outgrow"
+    }
+  ]
+}

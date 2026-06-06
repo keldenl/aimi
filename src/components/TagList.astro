@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  items: string[];
+  icon: (_props: { size?: number; class?: string }) => unknown;
+}
+
+const { title, items, icon: IconComponent } = Astro.props;
+---
+
+<section class="rounded-lg border border-white/10 bg-white/[0.045] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-5">
+  <h2 class="mb-4 flex items-center gap-2 text-base font-semibold">
+    <IconComponent size={20} class="text-ink" />
+    {title}
+  </h2>
+  <div class="flex flex-wrap gap-2">
+    {items.map((item) => (
+      <span class="rounded-full border border-white/12 bg-black/10 px-3 py-1.5 text-xs text-ink/90">{item}</span>
+    ))}
+  </div>
+</section>
