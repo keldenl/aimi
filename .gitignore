@@ -1,6 +1,7 @@
 node_modules
 dist
 .astro
+.portless
 .DS_Store
 mockup.png
 npm-debug.log*

@@ -4,10 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 PORTLESS_STATE_DIR=.portless portless",
+    "dev:astro": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build && pagefind --site dist",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check"
+  },
+  "portless": {
+    "name": "aimi",
+    "script": "dev:astro"
   },
   "dependencies": {
     "@lucide/astro": "^1.17.0",
@@ -18,6 +23,7 @@
   "devDependencies": {
     "@astrojs/check": "latest",
     "pagefind": "latest",
+    "portless": "^0.14.0",
     "typescript": "latest",
     "vite": "^7.3.5"
   }
